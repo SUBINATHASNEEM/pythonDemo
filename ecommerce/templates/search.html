@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block description %}
+    we have lots of collections
+{% endblock %}
+{%  block title %}
+    search
+{% endblock %}
+
+{% block body %}
+<div>
+    <p class="my_search_text">You have searched for :<b>"{{query}}"</b></p>
+</div>
+ <div class="container">
+        <div class="row mx_auto">
+            {% for i in products %}
+            <div class="my_bottom_margin col-6 col-sm-6 col-md-6 col-lg-6" >
+                <div class="card text-center" style="min-width: 18rem;">
+                    <a href="{{i.get_url}}" ><img class="card-img-top my_image" src="{{i.image.url}}" alt="{{i.name}}"></a>
+                </div>
+            </div>
+        </div>
+            <div class="card-body">
+                <h4>{{i.name}}</h4>
+                <p>{{i.price}}</p>
+            </div>
+      </div>
+ </div>
+            {% empty %}
+            <div class="row mx_auto">
+                 <p class="text-center my_search_text">0 result found</p>
+            </div>
+            {% endfor %}
+        </div>
+ </div>
+
+
+
+{% endblock %}

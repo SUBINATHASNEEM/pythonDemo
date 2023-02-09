@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        welcome to FATHIMA BOTIQUE where you can buy different items....
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+     {% if category %}
+        {{ category.name }} - FATHIMA BOTIQUE
+    {% else %}
+        See our New Collections - FATHIMA BOTIQUE
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if category %}
+    <div>
+        <div class="row my_row_class">
+            <div class="mx_auto">
+            <p><a href="{% url 'ecom_app:allProdCat' %}">Our Product Collection</a> </p>
+        </div>
+            </div>
+    </div>
+{% endif %}
+
+<div class="mx_auto">
+    {% if category %}
+    <img class="my_image" src="{{category.image.url}}" alt="{{category.name}}">
+</div>
+    <br>
+<div>
+    <h1 class="text-center my_title">{{ category.name }}</h1>
+    <p class="text-justify">{{ category.description }}</p>
+</div>
+    {% else  %}
+<div>
+    <img class="my_image my_image_padding" src="{% static 'image/banner.png' %}" alt="Our Products" width="100px;" height="5px;">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title">Our Product Collections</h1>
+    <p class="text-justify">A woman’s wardrobe is her opportunity to stand out and make a lasting first impression. Launched in 2012, Impressions Online Boutique offers a wide range of apparel to fit any woman’s unique sense of style. Our clothing and accessories are carefully curated to provide our customers the latest fashions. To keep our customers in style we post new arrivals daily, as well as offer stylist picks to help any indecisive shoppers. Impressions Online Boutique is a fashionista’s best place to create the perfect wardrobe.
+
+Beyond helping you look your best, Impressions Online Boutique strives to make every purchase a positive experience. Our top priorities are excellent customer service, exceptionally quick order processing, ultra fast shipping times, and a hassle-free return policy. We value your feedback, whether positive or constructive and we are continuously working to improve your experience.
+
+If you are a first-time visitor or long-standing customer, we hope you will be thrilled with every aspect of your Impressions Online Boutique shopping experience.
+
+</p>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9" col-sm->
+            <div class="row">
+                <a href="{{ product.get_url }}"> <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100px"> </a>
+                <div>
+                    <h4>{{ product.name }}</h4>
+                    <p> Rs :{{ product.price }} /-</p>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+
+        <hr>
+
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
